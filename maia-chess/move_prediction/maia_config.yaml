@@ -1,0 +1,32 @@
+%YAML 1.2
+---
+gpu: 0
+
+dataset:
+  input_train: 'data/maia-data/training/*/*' # This uses glob so training/*/* is probably the end
+  input_test: 'data/maia-data/validation/*/*' # This uses glob so validate/*/* is probably the end
+
+training:
+    precision: 'half'
+    batch_size: 64
+    num_batch_splits: 1
+    test_steps: 2000
+    train_avg_report_steps: 1
+    total_steps: 40000
+    checkpoint_steps: 10000
+    shuffle_size: 250000
+    lr_values:
+        - 0.0001
+        - 0.00001
+        - 0.000001
+    lr_boundaries:
+        - 80000
+        - 200000
+    policy_loss_weight: 1.0            # weight of policy loss
+    value_loss_weight: 1.0             # weight of value loss
+
+model:
+  filters: 64
+  residual_blocks: 6
+  se_ratio: 8
+...
